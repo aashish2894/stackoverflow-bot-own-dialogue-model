@@ -1,20 +1,3 @@
-""" A neural chatbot using sequence to sequence model with
-attentional decoder. 
-
-This is based on Google Translate Tensorflow model 
-https://github.com/tensorflow/models/blob/master/tutorials/rnn/translate/
-
-Sequence to sequence model by Cho et al.(2014)
-
-Created by Chip Huyen (chiphuyen@cs.stanford.edu)
-CS20: "TensorFlow for Deep Learning Research"
-cs20.stanford.edu
-
-This file contains the code to do the pre-processing for the
-Cornell Movie-Dialogs Corpus.
-
-See readme.md for instruction on how to run the starter code.
-"""
 import os
 import random
 import re
@@ -71,10 +54,10 @@ def question_answers(id2line, convos):
 def prepare_dataset(questions, answers):
     # create path to store all the train & test encoder & decoder
     make_dir(config.PROCESSED_PATH)
-    
+
     # random convos to create the test set
     test_ids = random.sample([i for i in range(len(questions))],config.TESTSET_SIZE)
-    
+
     filenames = ['train.enc', 'train.dec', 'test.enc', 'test.dec']
     files = []
     for filename in filenames:
@@ -134,7 +117,7 @@ def build_vocab(filename, normalize_digits=True):
         f.write('<pad>' + '\n')
         f.write('<unk>' + '\n')
         f.write('<s>' + '\n')
-        f.write('<\s>' + '\n') 
+        f.write('<\s>' + '\n')
         index = 4
         for word in sorted_vocab:
             if vocab[word] < config.THRESHOLD:
@@ -165,7 +148,7 @@ def token2id(data, mode):
     _, vocab = load_vocab(os.path.join(config.PROCESSED_PATH, vocab_path))
     in_file = open(os.path.join(config.PROCESSED_PATH, in_path), 'r')
     out_file = open(os.path.join(config.PROCESSED_PATH, out_path), 'w')
-    
+
     lines = in_file.read().splitlines()
     for line in lines:
         if mode == 'dec': # we only care about '<s>' and </s> in encoder
